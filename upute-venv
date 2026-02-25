@@ -1,0 +1,9 @@
+aktivacija:
+$ source [ime direktorija]/bin/activate
+
+deaktivacija
+$ deactivate
+
+brisanje:
+$ rm -r [ime direktorija]
+
