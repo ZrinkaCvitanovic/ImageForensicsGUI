@@ -21,15 +21,13 @@ def ELA(img_path, q):
                 for y in range(HEIGHT):
                         d[x, y] = tuple(k * SCALE for k in d[x, y])
 
-        diff.save(img_path + "_result.jpg")
+        diff.save(img_path + "_result_" + str(q) + ".jpg")
         os.remove(TEMP)
         os.rmdir("temp")
 
 parser = argparse.ArgumentParser()
-parser.add_argument('in_path', metavar='input_img', type=str,
-	 				help='path to input image')
-parser.add_argument('quality', type=int, default=90, help='desired quality')
-
+parser.add_argument('in_path', metavar='input_img', type=str, help='path to input image')
+parser.add_argument('quality', type=int, help='desired quality')
 args = parser.parse_args()
 
 ELA(args.in_path, args.quality)
