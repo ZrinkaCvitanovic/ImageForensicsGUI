@@ -10,7 +10,6 @@ parser.add_argument('in_path', metavar='input_img', type=str, help='path to inpu
 parser.add_argument('quality', type=int, help='desired quality')
 args = parser.parse_args()
 
-
 input_file = args.in_path
 
 if not os.path.isfile(input_file):

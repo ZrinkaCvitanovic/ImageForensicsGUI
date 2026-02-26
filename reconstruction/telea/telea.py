@@ -26,7 +26,3 @@ except:
 
 out_path = args.in_path + "_result_"  + method + ".jpg"
 imageio.v2.imwrite(args.out_path, img)
-
-cv.imshow('dst',dst)
-cv.waitKey(0)
-cv.destroyAllWindows()
