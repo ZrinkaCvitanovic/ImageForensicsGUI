@@ -1,8 +1,5 @@
 #source: https://github.com/kalinkinisaac/auto-forgery-detection/tree/master
-import os
 import numpy as np
-import matplotlib.pyplot as plt
-
 from PIL import Image
 from scipy.stats import linregress
 from sklearn.ensemble import RandomForestClassifier
@@ -11,12 +8,9 @@ from sklearn.metrics import roc_curve, auc
 from joblib import dump, load
 import imageio
 import argparse
-from manage import *
 
 from image_tools import to_jpeg, color_box
 from random import randint
-
-
 # =========================
 # Core Difference Functions
 # =========================
@@ -41,8 +35,6 @@ def difference_curve(image: Image.Image, x=0, y=0, w=16, q_min=30, q1=95) -> np.
         result /= max_val
 
     return result
-
-
 # =========================
 # Curve Aggregation
 # =========================
@@ -72,8 +64,6 @@ def get_curves(image: Image.Image, q_min=30, q1=95, w=8) -> np.ndarray:
     block_sum /= max_vals
 
     return block_sum
-
-
 # =========================
 # Feature Extraction
 # =========================
@@ -98,8 +88,6 @@ def get_features(curve: np.ndarray, q1: int, q_min=30):
     f6 = np.sum(g6**2)
 
     return f1, f2, f3, f4, f5, f6
-
-
 # =========================
 # Machine Learning
 # =========================
@@ -130,20 +118,10 @@ def train_model():
     fpr, tpr, _ = roc_curve(y_test, y_proba)
     roc_auc = auc(fpr, tpr)
 
-    plt.figure()
-    plt.plot(fpr, tpr, label=f"AUC = {roc_auc:.3f}")
-    plt.plot([0, 1], [0, 1], "--")
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.legend()
-    plt.show()
-
     print("Test Accuracy:", clf.score(x_test, y_test))
     print("AUC:", roc_auc)
 
     dump(clf, "model.joblib")
-
-
 # =========================
 # Prediction
 # =========================
@@ -169,10 +147,6 @@ def predict(image: Image.Image, w, in_path):
     out_path = in_path + "_jpeg_" + str(w) + ".jpg"
     imageio.v2.imwrite(out_path, image)
 
-    #plt.imshow(np.asarray(image))
-    #plt.axis("off")
-    #plt.show()
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -186,6 +160,4 @@ if __name__ == "__main__":
         train_model()
     if args.in_path:
         img = Image.open(args.in_path).convert('RGB')
-        print('\t %%%%%% \t starting analisys process \t %%%%%% \t')
         predict(img, args.w, args.in_path)
-        print('\t %%%%%% \t done \t %%%%%% \t')
