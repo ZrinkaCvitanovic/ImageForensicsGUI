@@ -148,7 +148,7 @@ def train_model():
 # Prediction
 # =========================
 
-def predict(image: Image.Image, w=64):
+def predict(image: Image.Image, w, in_path):
 
     clf = load("model.joblib")
 
@@ -166,8 +166,8 @@ def predict(image: Image.Image, w=64):
                 image = color_box(image, box=box, color=(0, 255, 0))
             else:
                 image = color_box(image, box=box)
-
-    imageio.v2.imwrite("jpeg.jpg", image)
+    out_path = in_path + "_jpeg_" + str(w) + ".jpg"
+    imageio.v2.imwrite(out_path, image)
 
     #plt.imshow(np.asarray(image))
     #plt.axis("off")
@@ -185,4 +185,7 @@ if __name__ == "__main__":
     if args.train:
         train_model()
     if args.in_path:
-        predict_img(args.in_path, args.w)
+        img = Image.open(args.in_path).convert('RGB')
+        print('\t %%%%%% \t starting analisys process \t %%%%%% \t')
+        predict(img, args.w, args.in_path)
+        print('\t %%%%%% \t done \t %%%%%% \t')
