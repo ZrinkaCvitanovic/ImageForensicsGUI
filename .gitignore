@@ -221,4 +221,6 @@ __marimo__/
 *.tif
 .venv/
 set1/
-sources/
+test_folder/
+reconstruction/image-restoration-sde
+2.deraining/
