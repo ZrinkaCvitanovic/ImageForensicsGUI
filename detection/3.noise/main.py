@@ -8,7 +8,6 @@
 '''
 #source: https://github.com/gtwell/image_tampering_detection/tree/master
 import cv2
-import matplotlib.pyplot as plt
 import numpy as np
 import pywt
 from PIL import Image
@@ -61,9 +60,6 @@ def MergeBlock1(kwargs):
     blocksize   = kwargs["BLOCK"]
     heatmap = np.array([MAD(blockMatrix[i]) for i in range(len(blockMatrix))]).reshape(int(HH.shape[0]/blocksize), int(HH.shape[1]/blocksize))
 
-    plt.subplot(1, 2, 1)
-    plt.imshow(heatmap, cmap="gray")
-
     # generated prediction mask method 1
     heatmap = heatmap.flatten()
     # THRESH = np.abs(np.percentile(heatmap[:-1]-heatmap[1:], 25))
@@ -108,8 +104,6 @@ def MergeBlock2(kwargs):
     blocksize   = kwargs["BLOCK"]
     heatmap = np.array([MAD(blockMatrix[i]) for i in range(len(blockMatrix))]).reshape(int(HH.shape[0]/blocksize), int(HH.shape[1]/blocksize))
 
-    plt.subplot(1, 2, 1)
-    plt.imshow(heatmap, cmap="gray")
 
     label = label.reshape(int(HH.shape[0]/blocksize), int(HH.shape[1]/blocksize))
     # THRESH = np.abs(np.percentile(heatmap[:-1]-heatmap[1:], 25))
