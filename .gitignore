@@ -216,9 +216,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 #Specifically for this project
-*.jpg
-*.png
-*.tif
+
 .venv/
 set1/
 test_folder/

@@ -22,7 +22,7 @@ try:
         method = "ns"
         
 except:
-     Exception("Set -t or -ns flag for Telea or Navier-Stroker inpainting respectively.")
+     Exception("Set -t or -ns flag for Telea or Navier-Stokes inpainting respectively.")
 
 out_path = args.in_path + "_result_"  + method + ".jpg"
 imageio.v2.imwrite(out_path, img)
