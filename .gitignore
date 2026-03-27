@@ -220,5 +220,5 @@ __marimo__/
 .venv/
 set1/
 test_folder/
-reconstruction/image-restoration-sde
+extras/
 2.deraining/
