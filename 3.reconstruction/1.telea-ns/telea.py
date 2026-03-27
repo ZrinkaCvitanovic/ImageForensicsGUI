@@ -11,19 +11,19 @@ parser.add_argument('-t', action='store_true')
 parser.add_argument('-ns', action='store_true')
 args = parser.parse_args()
 
-img = cv.imread(args.in_path)
+if not args.t and not args.ns:
+    print("Set -t or -ns flag for Telea or Navier-Stokes inpainting respectively.")
+    exit(1)
+img = cv.imread(args.in_path, cv.COLOR_BGR2RGB)
+dst = img
 mask = cv.imread(args.mask_path, cv.IMREAD_GRAYSCALE)
 method = ""
-try:
-    if (args.t):    
-        dst = cv.inpaint(img,mask,3,cv.INPAINT_TELEA)
-        method = "telea"
-    elif (args.ns):
-        dst = cv.inpaint(img,mask,3,cv.INPAINT_NS)
-        method = "ns"
-        
-except:
-     Exception("Set -t or -ns flag for Telea or Navier-Stokes inpainting respectively.")
+if (args.t):    
+    dst = cv.inpaint(img,mask,30,cv.INPAINT_TELEA)
+    method = "telea"
+else    :
+    dst = cv.inpaint(img,mask,30,cv.INPAINT_NS)
+    method = "ns"
 
-out_path = args.in_path + "_result_"  + method + ".jpg"
-imageio.v2.imwrite(out_path, img)
+out_path = args.in_path + "_result_" + method + ".png"
+imageio.v2.imwrite(out_path, dst)
