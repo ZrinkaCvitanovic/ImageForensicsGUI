@@ -6,8 +6,12 @@ parser.add_argument('in_path', metavar='input_img', type=str, help='path to inpu
 parser.add_argument('method', metavar='method', type=str, choices=['hsv', 'lum'], 
                     help="desired method for converting your image")
 args = parser.parse_args()
-
-
 original_img = cv2.imread(args.in_path)
-hsv_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2HSV)
-cv2.imwrite("hsv.png", hsv_img)
+if args.method == "hsv":
+    result = cv2.cvtColor(original_img, cv2.COLOR_BGR2HSV)
+    output_path = args.in_path + "_hsv.png"
+else:
+    result = cv2.cvtColor(original_img, cv2.COLOR_BGR2GRAY)
+    output_path = args.in_path + "_lum.png"
+
+cv2.imwrite(output_path, result)
