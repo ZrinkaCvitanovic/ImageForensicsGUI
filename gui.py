@@ -110,7 +110,7 @@ def event_noise(event):
         lbl_noise_msg["text"] = "Supported choices for method are gaussian and median"
     else:
         lbl_noise_msg["text"] ="Success!"
-        subprocess.run(['python3', 'reconstruction/enhancement/salt-and-pepper/denoising.py', in_image, method])
+        subprocess.run(['python3', 'reconstruction/enhancement/noise/denoising.py', in_image, method])
         ent_noise_in.delete(0, tk.END)
         ent_noise_method.delete(0, tk.END) 
 
