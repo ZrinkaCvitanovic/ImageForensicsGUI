@@ -4,10 +4,19 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('in_path', metavar='input_img', type=str,
                 help='path to input image')
-args = parser.parse_args()
+parser.add_argument('method', type=str, choices=["median", "gaussian"], help="desired method for denoising")
 
+args = parser.parse_args()
 image = cv2.imread(args.in_path)
 
-denoised_image = cv2.medianBlur(image, 5)
-output_path = args.in_path + "_denoised.png"
-cv2.imwrite(output_path, denoised_image)
+if args.method == "median":
+    denoised_image = cv2.medianBlur(image, 5)
+    output_path = args.in_path + "_medianBlur.png"
+    cv2.imwrite(output_path, denoised_image)
+
+elif args.method == "gaussian":
+    denoised_image = cv2.GaussianBlur(image, (5,5),0)
+    output_path = args.in_path + "_gaussianBlur.png"
+    cv2.imwrite(output_path, denoised_image)
+
+
