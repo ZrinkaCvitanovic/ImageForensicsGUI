@@ -218,7 +218,7 @@ __marimo__/
 #Specifically for this project
 
 .venv/
-set1/
+1.sources/Casia_1.0/
 test_folder/
 extras/
 2.deraining/

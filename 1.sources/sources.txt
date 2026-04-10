@@ -1,0 +1,3 @@
+folder, url
+Manipulated-Image-Dataset, https://cfreds.nist.gov/all/JiwonLee%2FDonggukUniversity/ManipulatedImageDataset
+Casia_1.0, https://github.com/namtpham/casia1groundtruth/tree/master?tab=readme-ov-file
