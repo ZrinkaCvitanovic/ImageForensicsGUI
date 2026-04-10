@@ -15,7 +15,7 @@ def event_ela(event):
     try:
         quality = int(ent_ela_q.get())
         if quality < 0 or quality > 100:
-            lbl_ela_msg["text"] ="Quality must be an integer between 0 and 100!"
+            lbl_ela_msg["text"] ="Quality value must be an integer between 0 and 100!"
         else: 
             lbl_ela_msg["text"] ="Success!"
             subprocess.run(['python3', 'detection/ela/main.py', in_image, str(quality)])
@@ -66,7 +66,7 @@ def event_telea(event):
         ent_telea_mask.delete(0, tk.END)
         ent_telea_radius.delete(0, tk.END)
     except:
-        lbl_telea_msg["text"] ="Radius must be a number!"
+        lbl_telea_msg["text"] ="Radius value must be a number!"
     
 
 
@@ -75,7 +75,7 @@ def event_patch(event):
     mask_image = ent_patch_mask.get()
     color = opt_patch_maskc.get()
     if color != "white" and color != "black" and color != "blue" and color != "green" and color != "red":
-        lbl_patch_msg["text"] = "Mask color must be white, black, blue, green or red."
+        lbl_patch_msg["text"] = "Supported choices are white, black, blue, green or red."
     else:
         lbl_patch_msg["text"] ="Success!"
         subprocess.run(['python3', 'reconstruction/PatchMatchInpainting/main.py', in_image, mask_image, color])
@@ -100,13 +100,13 @@ def event_resize(event):
             ent_resize_height.delete(0, tk.END)
             ent_resize_width.delete(0, tk.END)
     except:
-        lbl_resize_msg["text"] = "Height and width scale must be numbers!"
+        lbl_resize_msg["text"] = "Height and width scale values must be numbers!"
 
 def event_noise(event):
     in_image = ent_noise_in.get()
     method = opt_noise_method.get()
     if method != "gaussian" and method != "median":
-        lbl_noise_msg["text"] = "Supported choices for method are gaussian and median"
+        lbl_noise_msg["text"] = "Supported choices are gaussian and median"
     else:
         lbl_noise_msg["text"] ="Success!"
         subprocess.run(['python3', 'reconstruction/enhancement/noise/denoising.py', in_image, method])
@@ -116,7 +116,7 @@ def event_sharp(event):
     in_image = ent_sharp_in.get()
     method = opt_sharp_method.get()
     if method != "histogram" and method != "kernel" and method != "laplacian":
-        lbl_sharp_msg["text"] = "Supported choices for method are histogram, kernel or laplacian"
+        lbl_sharp_msg["text"] = "Supported choices are histogram, kernel or laplacian"
     else:
         if method == "histogram":
                 subprocess.run(['python3', 'reconstruction/enhancement/sharpen/histogram.py', in_image])
