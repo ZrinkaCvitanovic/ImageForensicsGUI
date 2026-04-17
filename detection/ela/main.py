@@ -21,7 +21,7 @@ def ELA(img_path, q):
                 for y in range(HEIGHT):
                         d[x, y] = tuple(k * SCALE for k in d[x, y])
 
-        diff.save(img_path + "_result_" + str(q) + ".jpg")
+        diff.save(img_path + "_ela_" + str(q) + ".jpg")
         os.remove(TEMP)
         os.rmdir("temp")
 
