@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 import subprocess
 
 root = tk.Tk()
@@ -9,6 +10,15 @@ tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
 tabControl.pack(expand = 1, fill ="both")
+
+def browseFiles():
+    filename = filedialog.askopenfilename(initialdir = "/home",
+                                          title = "Select a File",
+                                          filetypes = (("Text files",
+                                                        "*.txt*"),
+                                                       ("all files",
+                                                        "*.*")))
+    print(filename)
 
 def event_ela(event):
     in_image = ent_ela_in.get()
@@ -136,8 +146,9 @@ tabControl.add(tab2, text ='Detect image manipulation')
 
 lbl_ela_title = tk.Label(tab2, text ="Error Level Analysis")
 lbl_ela_title.config(font=("TkDefaultFont", 10, "bold"))
-lbl_ela_title.grid( row = 0, column = 0, sticky="w")
+lbl_ela_title.grid( row=0, column=0, sticky="w")
 tk.Label(tab2, text="Input image", width=50).grid(row=1, column=0, sticky="w")
+tk.Button(tab2, text="Browse Files",command=browseFiles).grid(row=1, column=2, sticky="w")
 tk.Label(tab2, text="Desired quality", width=50).grid(row=2, column=0, sticky="w")
 ent_ela_in = tk.Entry(tab2, width=100)
 ent_ela_in.grid(row=1, column=1, sticky="w")
@@ -151,10 +162,10 @@ lbl_ela_msg.grid(row=4, column=1)
 
 lbl_color_title = tk.Label(tab2, text ="Change Color Scheme")
 lbl_color_title.config(font=("TkDefaultFont", 10, "bold"))
-lbl_color_title.grid(row = 10, column = 0, sticky="w")
+lbl_color_title.grid(row=10, column=0, sticky="w")
 tk.Label(tab2, text="Input image", width=50).grid(row=11, column=0, sticky="w")
+tk.Button(tab2, text="Browse Files",command=browseFiles).grid(row=11, column=2, sticky="w")
 tk.Label(tab2, text="Desired method", width=50).grid(row=12, column=0, sticky="w")
-
 ent_color_in = tk.Entry(tab2, width=100)
 ent_color_in.grid(row=11, column=1, sticky="w")
 #ent_color_method = tk.Entry(tab2, width=5)
@@ -170,8 +181,9 @@ lbl_color_msg.grid(row=14, column=1)
 
 lbl_edge_title = tk.Label(tab2, text ="Edge detection")
 lbl_edge_title.config(font=("TkDefaultFont", 10, "bold"))
-lbl_edge_title.grid(column = 0, row = 20, sticky="w")
+lbl_edge_title.grid(column=0, row=20, sticky="w")
 tk.Label(tab2, text="Input image", width=50).grid(row=21, column=0, sticky="w")
+tk.Button(tab2, text="Browse Files",command=browseFiles).grid(row=21, column=2, sticky="w")
 tk.Label(tab2, text="Lower threshold", width=50).grid(row=22, column=0, sticky="w")
 tk.Label(tab2, text="Higher threshold", width=50).grid(row=23, column=0, sticky="w")
 robust_pressed = tk.IntVar()
@@ -190,13 +202,13 @@ lbl_edge_msg = tk.Label(tab2, text="")
 lbl_edge_msg.grid(row=26, column=1)
 
 
-
 tabControl.add(tab3, text ='Restore images')
 
 lbl_telea_title = tk.Label(tab3, text ="Telea inpainting")
 lbl_telea_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_telea_title.grid(row=0, column=0, sticky="w")
 tk.Label(tab3, text="Input image", width=50).grid(row=1, column=0, sticky="w")
+tk.Button(tab3, text="Browse Files",command=browseFiles).grid(row=1, column=2, sticky="w")
 tk.Label(tab3, text="Mask image", width=50).grid(row=2, column=0, sticky="w")
 tk.Label(tab3, text="Neighbourhood radius", width=50).grid(row=3, column=0, sticky="w")
 ent_telea_in = tk.Entry(tab3, width=100)
@@ -216,7 +228,9 @@ lbl_patch_title = tk.Label(tab3, text ="PatchMatch inpainting")
 lbl_patch_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_patch_title.grid(row=10, column=0, sticky="w")
 tk.Label(tab3, text="Input image", width=50).grid(row=11, column=0, sticky="w")
+tk.Button(tab3, text="Browse Files",command=browseFiles).grid(row=11, column=2, sticky="w")
 tk.Label(tab3, text="Mask image", width=50).grid(row=12, column=0, sticky="w")
+tk.Button(tab3, text="Browse Files",command=browseFiles).grid(row=12, column=2, sticky="w")
 tk.Label(tab3, text="Mask color", width=50).grid(row=13, column=0, sticky="w")
 #tk.Label(tab3, text="Pyramid/single", width=50).grid(row=14, column=0, sticky="w")   TODO
 ent_patch_in = tk.Entry(tab3, width=100)
@@ -238,6 +252,7 @@ lbl_resize_title = tk.Label(tab3, text ="Image resizing")
 lbl_resize_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_resize_title.grid(row=20, column=0, sticky="w")
 tk.Label(tab3, text="Input image", width=50).grid(row=21, column=0, sticky="w")
+tk.Button(tab3, text="Browse Files",command=browseFiles).grid(row=21, column=2, sticky="w")
 tk.Label(tab3, text="Height scale", width=50).grid(row=22, column=0, sticky="w")
 tk.Label(tab3, text="Width scale", width=50).grid(row=23, column=0, sticky="w")
 tk.Label(tab3, text="Method", width=50).grid(row=24, column=0, sticky="w")
@@ -260,6 +275,7 @@ lbl_noise_title = tk.Label(tab3, text ="Removing noise from images")
 lbl_noise_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_noise_title.grid(row=30, column=0, sticky="w")
 tk.Label(tab3, text="Input image", width=50).grid(row=31, column=0, sticky="w")
+tk.Button(tab3, text="Browse Files",command=browseFiles).grid(row=31, column=2, sticky="w")
 tk.Label(tab3, text="Method", width=50).grid(row=32, column=0, sticky="w")
 ent_noise_in = tk.Entry(tab3, width=100)
 ent_noise_in.grid(row=31, column=1, sticky="w")
@@ -276,6 +292,7 @@ lbl_sharp_title = tk.Label(tab3, text ="Sharpening images")
 lbl_sharp_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_sharp_title.grid(row=40, column=0, sticky="w")
 tk.Label(tab3, text="Input image", width=50).grid(row=41, column=0, sticky="w")
+tk.Button(tab3, text="Browse Files",command=browseFiles).grid(row=41, column=2, sticky="w")
 tk.Label(tab3, text="Method", width=50).grid(row=42, column=0, sticky="w")
 ent_sharp_in = tk.Entry(tab3, width=100)
 ent_sharp_in.grid(row=41, column=1, sticky="w")
