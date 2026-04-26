@@ -14,6 +14,8 @@ tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
 tabControl.pack(expand = 1, fill ="both")
 
+global num_of_images_uploaded
+
 class CustomTooltip:
     def __init__(self, widget, text):
         self.widget = widget
@@ -63,7 +65,6 @@ def event_color(event):
     method = opt_color_method.get()
     if method != "lum" and method != "hsv":
         lbl_color_msg["text"] ="Unsupported choice of method. Choose 'lum' or 'hsv!"
-        print("method: ", method)
     else: 
         lbl_color_msg["text"] ="Success!"
         subprocess.run(['python3', 'detection/change-color-scheme/main.py', in_image, method])
@@ -161,31 +162,35 @@ def event_sharp(event):
 
  
 def imageUploader():
+    global num_of_images_uploaded
     fileTypes = [("All files", "*.*")]
     file_list = tk.filedialog.askopenfilenames(filetypes=fileTypes)
     file_list = list(file_list)
     labels_img = [upload_lbl_1, upload_lbl_2, upload_lbl_3, upload_lbl_4]
     labels_mtdt = [upload_mtdt_1, upload_mtdt_2, upload_mtdt_3, upload_mtdt_4]
-    counter = 0
 
     # if file is selected
     for path in file_list:
         if path:
             img = Image.open(path)
-            img = img.resize((750, 750))
+            img = img.resize(650, 650)
             pic = ImageTk.PhotoImage(img)
             # re-sizing the app window in order to fit picture
             # and buttom
-            labels_img[counter].config(image=pic)
-            labels_img[counter].image = pic
-            metadata = ""
-            print(metadata)
-            labels_mtdt[counter]["text"] = metadata
-            counter += 1
+            labels_img[num_of_images_uploaded].config(image=pic)
+            labels_img[num_of_images_uploaded].image = pic
+            metadata = tools.parseParameters(path.split("/")[-1])
+            metadata_string = ""
+            for key in metadata.keys():
+                    metadata_string += f"{key}: {metadata.get(key)}\n"
+            labels_mtdt[num_of_images_uploaded]["text"] = metadata_string
+            num_of_images_uploaded += 1
 
-    # if no file is selected, then we are displaying below message
-        else:
-            print("No file is chosen !! Please choose a file.")
+def removeImage(event):
+    global num_of_images_uploaded
+    num_of_images_uploaded -= 1
+
+
 
 
 tabControl.add(tab1, text ='Detect image manipulation')
@@ -352,6 +357,7 @@ btn_sharp.grid(row=43, column=1, sticky="w")
 lbl_sharp_msg = tk.Label(tab2, text="")
 lbl_sharp_msg.grid(row=44, column=1)
 
+num_of_images_uploaded = 0
 tabControl.add(tab3, text ='Compare results')
 upload_lbl = tk.Label(tab3, text="Upload up to 4 images for result comparison.")
 upload_lbl.config(font=("TkDefaultFont", 10, "bold"))
@@ -374,7 +380,6 @@ upload_lbl_4 = tk.Label(tab3, text="Picture 4")
 upload_lbl_4.grid(column=2, row=3, sticky="w")
 upload_mtdt_4 = tk.Label(tab3, text="Metadata 4")
 upload_mtdt_4.grid(column=3, row=3)
-tools.parseParameters("path")
 
 
 
