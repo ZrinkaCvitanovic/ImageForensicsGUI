@@ -15,7 +15,7 @@ edges = cv2.Canny(gray_image, args.lower, args.higher)
 
 remove_ext = args.in_path.split(".")
 real_path = remove_ext[0]
-extension = remove_ext[1]
+extension = "." + remove_ext[1]
 
 if args.robust:
     equalized_image = cv2.equalizeHist(gray_image)
@@ -36,8 +36,8 @@ if args.robust:
     segmented_map = cv2.Canny(bilateral_filter, 50, 150)  # Edge detection
     segmented_map = cv2.dilate(segmented_map, None, iterations=1) 
 
-    output_path = real_path + "-edges-" + str(args.lower) + "-" + str(args.higher) + "-robust." + extension
+    output_path = real_path + "-Edge_Detection-" + str(args.lower) + "-" + str(args.higher) + "-robust" + extension
     cv2.imwrite(output_path, segmented_map) 
 else: 
-    output_path = real_path + "-edges-" + str(args.lower) + "-" + str(args.higher) + "." + extension
+    output_path = real_path + "-Edge_Detection-" + str(args.lower) + "-" + str(args.higher) + extension
     cv2.imwrite(output_path, edges) 

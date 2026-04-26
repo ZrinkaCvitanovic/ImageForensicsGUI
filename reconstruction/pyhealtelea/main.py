@@ -14,7 +14,11 @@ parser.add_argument('-r', '--radius', metavar='R', nargs=1, type=int, default=[5
 args = parser.parse_args()
 
 img = imageio.v2.imread(args.in_path)
-out_path = args.in_path + "_result_pyheal"  + ".png"
+remove_ext = args.in_path.split(".")
+real_path = remove_ext[0]
+extension = "." + remove_ext[1]
+
+out_path = real_path + "-Telea"  + extension
 mask_img = imageio.v2.imread(args.mask_path)
 mask = mask_img[:, :, 0].astype(bool, copy=False)
 pyheal.inpaint(img, mask, args.radius[0])

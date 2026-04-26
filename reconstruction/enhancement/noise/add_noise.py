@@ -39,15 +39,19 @@ img = cv2.imread(args.in_path)
 img_gray =cv2.imread(args.in_path, cv2.IMREAD_GRAYSCALE)
 output_image = img
 
+remove_ext = args.in_path.split(".")
+real_path = remove_ext[0]
+extension = "." + remove_ext[1]
+
 if args.type == "salt-and-pepper":
     output_image = salt_and_pepper(img) # salt-and-pepper noise can be applied only to grayscale images??
-    output_path = args.in_path + "_salt-and-pepper"
+    output_path = real_path + "_salt-and-pepper" + extension
 elif args.type == "gaussian":
     output_image = gaussian(img)
-    output_path = args.in_path + "_gaussian.png"
+    output_path = real_path + "_gaussian" + extension
 
 else:
     output_image = random_noise(img)
-    output_path = args.in_path + "_random.png"
+    output_path = real_path + "_random" + extension
 
 cv2.imwrite(output_path, output_image)

@@ -26,6 +26,10 @@ match args.method:
     case "linear":
         method = cv2.INTER_LINEAR
 
-scaled_img = cv2.resize(low_res_img, (width * args.h, height * args.w), interpolation=method)
-output_path = args.in_path + "_" + args.method + ".png"
+parsed_path = args.in_path.split(".")
+real_path = parsed_path[0]
+extension = "." + parsed_path[1]
+
+scaled_img = cv2.resize(low_res_img, (height * args.h, width * args.w), interpolation=method)
+output_path = real_path + "-resize-" + args.method + "-" + str(args.h) + "-" + str(args.w) + extension
 cv2.imwrite(output_path, scaled_img)

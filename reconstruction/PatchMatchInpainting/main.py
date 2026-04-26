@@ -246,6 +246,8 @@ if __name__ == "__main__":
     # Perform inpainting using pyramid approach
     #inpainted_image = pyramid_inpainting(image, mask, patch_size, visual)
     inpainted_image = single_inpainting(image, mask, patch_size, iterations=20, visual=visual)
-    
-    output_path = args.in_path + "_patchmatch.png"
+    remove_ext = args.in_path.split(".")
+    real_path = remove_ext[0]
+    extension = "." + remove_ext[1]
+    output_path = real_path + "-PatchMatch-" + args.mask_c + extension
     cv2.imwrite(output_path, inpainted_image)

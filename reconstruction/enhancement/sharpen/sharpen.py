@@ -21,6 +21,9 @@ else:
     # Add the Laplacian output to the original image
     sharpened = cv2.addWeighted(image, 1, laplacian, 1, 0)
 
+parsed_path = args.in_path.split(".")
+real_path = parsed_path[0]
+extension = "." + parsed_path[1]
 #Save the image
-output_path = args.in_path + "_" + args.method + ".png"
+output_path = real_path + "-sharpen-" + args.method + extension
 cv2.imwrite(output_path, sharpened)
