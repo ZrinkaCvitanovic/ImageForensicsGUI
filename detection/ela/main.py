@@ -20,8 +20,10 @@ def ELA(img_path, q):
         for x in range(WIDTH):
                 for y in range(HEIGHT):
                         d[x, y] = tuple(k * SCALE for k in d[x, y])
-
-        diff.save(img_path + "_ela_" + str(q) + ".jpg")
+        parsed_path = img_path.split(".")
+        real_path = parsed_path[0]
+        extension = "." + parsed_path[1]
+        diff.save(real_path + "-ela-" + str(q) + extension)
         os.remove(TEMP)
         os.rmdir("temp")
 

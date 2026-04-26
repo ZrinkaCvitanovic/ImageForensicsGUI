@@ -220,3 +220,5 @@ __marimo__/
 .venv/
 1.sources/database-images/
 extras/
+*.png 
+*.jpg
