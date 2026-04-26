@@ -173,7 +173,7 @@ def imageUploader():
     for path in file_list:
         if path:
             img = Image.open(path)
-            img = img.resize(650, 650)
+            img = img.resize((750, 750))
             pic = ImageTk.PhotoImage(img)
             # re-sizing the app window in order to fit picture
             # and buttom
@@ -182,7 +182,7 @@ def imageUploader():
             metadata = tools.parseParameters(path.split("/")[-1])
             metadata_string = ""
             for key in metadata.keys():
-                    metadata_string += f"{key}: {metadata.get(key)}\n"
+                    metadata_string += f"{key}: {metadata.get(key)}  \n"
             labels_mtdt[num_of_images_uploaded]["text"] = metadata_string
             num_of_images_uploaded += 1
 
@@ -363,22 +363,23 @@ upload_lbl = tk.Label(tab3, text="Upload up to 4 images for result comparison.")
 upload_lbl.config(font=("TkDefaultFont", 10, "bold"))
 upload_lbl.grid(row=0, column=0, sticky="w")
 upload_button = tk.Button(tab3, text="Upload Files", command=imageUploader)
-upload_button.grid(column=0, row=1, sticky="w")
-upload_lbl_1 = tk.Label(tab3, text="Picture 1")
-upload_lbl_1.grid(column=0, row=2, sticky="w")
-upload_mtdt_1 = tk.Label(tab3, text="Metadata 1")
-upload_mtdt_1.grid(column=1, row=2)
-upload_lbl_2 = tk.Label(tab3, text="Picture 2")
-upload_lbl_2.grid(column=2, row=2, sticky="w")
-upload_mtdt_2 = tk.Label(tab3, text="Metadata 2")
-upload_mtdt_2.grid(column=3, row=2)
-upload_lbl_3 = tk.Label(tab3, text="Picture 3")
+upload_button.grid(column=1, row=0, sticky="w")
+upload_lbl_1 = tk.Label(tab3, text="")
+upload_lbl_1.grid(column=0, row=1, sticky="w")
+upload_mtdt_1 = tk.Label(tab3, text="")
+upload_mtdt_1.grid(column=1, row=1)
+upload_lbl_2 = tk.Label(tab3, text="")
+upload_lbl_2.grid(column=2, row=1, sticky="w")
+upload_mtdt_2 = tk.Label(tab3, text="")
+upload_mtdt_2.grid(column=3, row=1)
+tk.Label(tab3, text="").grid(row=2, column=0)
+upload_lbl_3 = tk.Label(tab3, text="")
 upload_lbl_3.grid(column=0, row=3, sticky="w")
-upload_mtdt_3 = tk.Label(tab3, text="Metadata 3")
+upload_mtdt_3 = tk.Label(tab3, text="")
 upload_mtdt_3.grid(column=1, row=3)
-upload_lbl_4 = tk.Label(tab3, text="Picture 4")
+upload_lbl_4 = tk.Label(tab3, text="")
 upload_lbl_4.grid(column=2, row=3, sticky="w")
-upload_mtdt_4 = tk.Label(tab3, text="Metadata 4")
+upload_mtdt_4 = tk.Label(tab3, text="")
 upload_mtdt_4.grid(column=3, row=3)
 
 
