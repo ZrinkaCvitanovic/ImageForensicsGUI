@@ -1,0 +1,15 @@
+./test-edges.sh Carvalho/normal01.png
+./test-edges.sh Carvalho/normal03.png
+./test-edges.sh Carvalho/normal04.png
+./test-edges.sh Carvalho/normal05.png
+./test-edges.sh Carvalho/splicing02.png
+./test-edges.sh Carvalho/splicing11.png
+./test-edges.sh Carvalho/splicing23.png
+./test-edges.sh Casia_1_0/Au_arc_0018.jpg
+./test-edges.sh Casia_1_0/cubic_Au_arc_0018.png
+./test-edges.sh Casia_1_0/cubic_Sp_S_NNN_A_arc0018_arc0018_0013.png
+./test-edges.sh Casia_1_0/Sp_S_NNN_A_arc0018_arc0018_0013.jpg
+./test-edges.sh Columbia_Color/canong3_02_sub_01.tif
+./test-edges.sh Columbia_Color/canong3_canonxt_sub_15.tif
+./test-edges.sh FantasticReality/IMG_61_IMG_60.jpg
+./test-edges.sh FantasticReality/IMG_60.jpg

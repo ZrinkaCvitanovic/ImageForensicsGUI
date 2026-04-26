@@ -1,3 +1,4 @@
+#source: https://opencv.org/resizing-and-rescaling-images-with-opencv/
 import cv2
 import argparse
 

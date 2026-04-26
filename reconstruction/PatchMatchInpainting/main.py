@@ -2,7 +2,6 @@
 import numpy as np
 import cv2
 import argparse
-#from tqdm import tqdm
 
 class PatchMatch:
     def __init__(self, source_image, mask, patch_size):

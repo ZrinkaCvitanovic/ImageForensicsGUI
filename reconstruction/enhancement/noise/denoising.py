@@ -1,6 +1,6 @@
 import cv2
 import argparse
-
+#source: https://docs.opencv.org/3.4/d5/d69/tutorial_py_non_local_means.html
 parser = argparse.ArgumentParser()
 parser.add_argument('in_path', metavar='input_img', type=str,
                 help='path to input image')
