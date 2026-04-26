@@ -11,6 +11,28 @@ tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
 tabControl.pack(expand = 1, fill ="both")
 
+class CustomTooltip:
+    def __init__(self, widget, text):
+        self.widget = widget
+        self.text = text
+        self.widget.bind("<Enter>", self.enter)
+        self.widget.bind("<Leave>", self.leave)
+        self.tooltip_window = None
+    def enter(self, event=None):
+        x, y, cx, cy = self.widget.bbox("insert")
+        x += self.widget.winfo_rootx() + 25
+        y += self.widget.winfo_rooty() + 20
+        self.tooltip_window = tk.Toplevel(self.widget)
+        self.tooltip_window.wm_overrideredirect(True)
+        self.tooltip_window.wm_geometry("+%d+%d" % (x, y))
+        label = tk.Label(self.tooltip_window, text=self.text, justify='left',
+                         background='#ffffff', relief='solid', borderwidth=1,
+                         font=("TkDefaultFont", "12", "normal"))
+        label.pack(ipadx=1)
+    def leave(self, event=None):
+        if self.tooltip_window:
+            self.tooltip_window.destroy()
+
 def browseFiles():
     filename = filedialog.askopenfilename(initialdir = "/home",
                                           title = "Select a File",
@@ -154,6 +176,7 @@ ent_ela_in = tk.Entry(tab2, width=100)
 ent_ela_in.grid(row=1, column=1, sticky="w")
 ent_ela_q = tk.Entry(tab2, width=5)
 ent_ela_q.grid(row=2, column=1, sticky="w")
+tooltip = CustomTooltip(ent_ela_q, "Recommended values for quality are between 40 and 80.")
 btn_ela = tk.Button(tab2, text='Start')
 btn_ela.bind('<Button>', event_ela)
 btn_ela.grid(row=3, column=1, sticky="w")
