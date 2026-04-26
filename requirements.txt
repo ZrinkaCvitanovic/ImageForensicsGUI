@@ -1,4 +1,9 @@
+engineering-notation==0.13.2
+exif==1.6.1
 ImageIO==2.37.3
 numpy==2.4.3
 opencv-python==4.13.0.92
 pillow==12.1.1
+plum-py==0.8.7
+stringify==0.1.1
+tk-tools==0.17.0
