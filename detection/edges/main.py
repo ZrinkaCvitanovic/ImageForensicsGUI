@@ -1,0 +1,37 @@
+#source: https://docs.opencv.org/3.4/da/d22/tutorial_py_canny.html
+import cv2
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('in_path', metavar='input_img', type=str, help='path to input image')
+parser.add_argument('lower', metavar="lower_threshold", type=int, help='minimum value of a gradient for a pixel, anything below will certainly be rejected as an edge candidate')
+parser.add_argument('higher', metavar="higher_threshold", type=int, help='maximum value of a gradient for a pixel to be accepted as an edge')
+
+parser.add_argument('--robust', action="store_true", 
+                    help="use for blurry or noisy images")
+args = parser.parse_args()
+
+gray_image = cv2.imread(args.in_path, cv2.IMREAD_GRAYSCALE)
+
+remove_ext = args.in_path.split(".")
+real_path = remove_ext[0]
+extension = "." + remove_ext[1]
+
+if args.robust:
+    equalized_image = cv2.equalizeHist(gray_image)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    background = cv2.morphologyEx(equalized_image, cv2.MORPH_DILATE, kernel)
+    shadow_removed = cv2.subtract(background, equalized_image)
+
+    gaussian_blur = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    bilateral_filter = cv2.bilateralFilter(gray_image, 9, 75, 75)
+
+    segmented_map = cv2.Canny(bilateral_filter, 50, 150)
+    segmented_map = cv2.dilate(segmented_map, None, iterations=1) 
+
+    output_path = real_path + "-Edge_Detection-" + str(args.lower) + "-" + str(args.higher) + "-robust" + extension
+    cv2.imwrite(output_path, segmented_map) 
+else: 
+    edges = cv2.Canny(gray_image, args.lower, args.higher)
+    output_path = real_path + "-Edge_Detection-" + str(args.lower) + "-" + str(args.higher) + extension
+    cv2.imwrite(output_path, edges) 
