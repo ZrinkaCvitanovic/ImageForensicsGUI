@@ -187,7 +187,7 @@ def imageUploader():
             for key in metadata.keys():
                     metadata_string += f"{key}: {metadata.get(key)}  \n"
             labels_mtdt[num_of_images_uploaded]["text"] = metadata_string
-            num_of_images_uploaded += 1
+            num_of_images_uploaded = (num_of_images_uploaded + 1) % 4
 
 def removeImage(event):
     global num_of_images_uploaded
@@ -378,11 +378,11 @@ lbl_sharp_msg.grid(row=54, column=1)
 
 num_of_images_uploaded = 0
 tabControl.add(tab3, text ='Compare results')
-upload_lbl = tk.Label(tab3, text="Upload up to 4 images for result comparison.")
+upload_lbl = tk.Label(tab3, text="Upload up to 4 images for result comparison          ")
 upload_lbl.config(font=("TkDefaultFont", 10, "bold"))
 upload_lbl.grid(row=0, column=0, sticky="w")
 upload_button = tk.Button(tab3, text="Upload Files", command=imageUploader)
-upload_button.grid(column=1, row=0, sticky="w")
+upload_button.grid(column=1, row=0, sticky="e")
 upload_lbl_1 = tk.Label(tab3, text="")
 upload_lbl_1.grid(column=0, row=1, sticky="w")
 upload_mtdt_1 = tk.Label(tab3, text="")

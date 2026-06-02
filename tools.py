@@ -5,45 +5,46 @@ def parseParameters(path):
     extension = "." + remove_ext[1]
     split_real_path = real_path.split("-")
     image_title = split_real_path[0]
-    params.update({"Original image title": image_title + extension})
+    params.update({"Original image": image_title + extension})
     try:
         algorithm = split_real_path[1]
         params.update({"Algorithm": algorithm})
         match algorithm:
-            case "ela":
+            case "ELA":
                 quality = split_real_path[2]
                 params.update({"Quality": quality})
             case "HSV":
                 params.update({"Algorithm": "Hue-Saturation-Value"})
             case "LUM":
                 params.update({"Algorithm": "Luminence gradient"})
-            case "edges":
+            case "Edge_Detection":
                 lower = split_real_path[2]
                 higher = split_real_path[3]
-                if len(split_real_path) > 4:
-                    robust = True
-                else:
-                    robust = False
+                params.update({"Algorithm": "Edge detection"})
                 params.update({"Lower threshold": lower})
                 params.update({"Higher threshold": higher})
-                params.update({"Robust detection": robust})
             case "PatchMatch":
                 mask_color = split_real_path[2]
-                params.update({"Mask color": mask_color})
+                params.update({"Mask color": mask_color.capitalize()})
             case "resize":
                 method = split_real_path[2]
                 height_scale = split_real_path[3]
                 width_scale = split_real_path[4]
-                params.update({"Method": method})
+                params.update({"Method": method.capitalize()})
                 params.update({"Height scale": height_scale})
                 params.update({"Width scale": width_scale})
             case "sharpen":
                 method = split_real_path[2]
-                params.update({"Method": method})
+                params.update({"Method": method.capitalize()})
             case "Telea":
                 params.update({"Algorithm": "Telea's inpainting"})
                 radius = split_real_path[2]
                 params.update({"Radius": radius})
+            case "Gaussian_blur":
+                params.update({"Algorithm": "Gaussian filter"})
+            case "Median_blur":
+                params.update({"Algorithm": "Median filter"})
+        
     except:
         return params
     return params

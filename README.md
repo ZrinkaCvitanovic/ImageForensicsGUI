@@ -1,6 +1,6 @@
 # ImageForensicsGUI
 This tool was created as a result of research I have done for my final thesis at 
-[Faculty of Electrical Engineering and Computing](https://www.fer.unizg.hr/en), University of Zagreb. The thesis title is "Forenzički alat za prepoznavanje i uklanjanje izmjena na digitalnim slikama" (Croatian for "Forensic tool for detection of tampering and restoring tampered digital images"). The thesis is not yet public.
+[Faculty of Electrical Engineering and Computing](https://www.fer.unizg.hr/en), University of Zagreb. The thesis title is "Forenzički alat za prepoznavanje i uklanjanje izmjena na digitalnim slikama" (Croatian for "Forensic tool for detection of tampering and restoring tampered digital images"). The thesis is not yet published.
 
 The tool has three main components:
 1. detecting image manipulation
@@ -16,7 +16,7 @@ The tool has three main components:
 
 The tools can be used both thorugh graphic interface or using command line. The user interface has suggestions for parameter values which are shown when hovering over the entry field. 
 
-DISCLAIMER: I **do not** take credit for writing implementations of the used algorithms. Most of the them were built on other implentations whose authors are referenced at the beginning of each file. However, most of them had to be updated for later version of Python.
+DISCLAIMER: I **do not** take credit for writing implementations of all the used algorithms. Some of the them were built on other implentations whose authors are referenced at the beginning of each file. However, they all had to be updated for later version of Python and adjusted so they can all work seamlessly within the app.
 
 ## Setup and install
 This project was written in Python and the version used is 3.12. Therefore, it is recommended to use the same version in yor setup. Current version is supported only by Linux.
@@ -34,23 +34,53 @@ Now, if you wish to use the graphical interface, start it by executing command:
 
 Otherwise, navigate to the desired folder and use the tool from command line. 
 
+The tools can also be used with a Windows machine, but some features may not work. Later versions will hopefully support Windows machines, as well. If you wish to use this tool from Windows, just remove the "3" from commands (e.x. pip3 -> pip).
+
 ## Virtual environment setup:
-Navigate to root of the project.
+### Linux
+1. Navigate to root of the project.
 
-Create venv (only the first time):
+2. Create venv (only the first time):
 
-    pip3 -m venv [name of the venv directory]
+        python3 -m venv [name of the venv directory]
 
 Typically, the folder is called `.venv`. The folder must not exist before you execute the command.
 
-Whenever you use the tool, you need to activate the virtual environment. Start from root of your project and enter in command line:
+3. Whenever you use the tool, you need to activate the virtual environment. Start from root of your project and enter in command line:
 
-    source [venv directory]/bin/activate
+        source [venv directory]/bin/activate
 
-When finished, deactivate the virtual environment. Navigate to root of you project and enter in command line:
+4. When finished, deactivate the virtual environment. Navigate to root of you project and enter in command line:
 
-    deactivate
+        deactivate
 
 If you wish to delete the virtual environment, simply delete the folder where you created it. Ensure you have deactivated the virtual environment  before this action:
 
     rm -r [venv directory]
+
+### Windows
+1. Navigate to root of the project.
+
+2. Create venv (only the first time):
+
+        python -m venv [name of the venv directory]
+
+Typically, the folder is called `.venv`. The folder must not exist before you execute the command.
+
+3. Whenever you use the tool, you need to activate the virtual environment. Start from root of your project and enter in command line (cmd.exe):
+
+        # cmd.exe
+        venv\Scripts\activate.bat
+        # PowerShell
+        venv\Scripts\Activate.ps1
+
+4. When finished, deactivate the virtual environment. Navigate to root of you project and enter in command line or PowerShell:
+
+        deactivate
+
+If you wish to delete the virtual environment, simply delete the folder where you created it. Ensure you have deactivated the virtual environment  before this action.
+
+    # cmd.exe
+    rmdir [venv directory]
+    # PowerShell:
+    Remove-Item [venv directory]
