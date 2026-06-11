@@ -18,7 +18,6 @@ tabControl.pack(expand = 1, fill ="both")
 global num_of_images_uploaded
 
 def browse_file(entry_widget):
-    """Generic file browser that inserts selected path into the provided entry widget"""
     filename = filedialog.askopenfilename(
         initialdir="/home",
         title="Select a File",
