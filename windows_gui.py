@@ -19,7 +19,7 @@ global num_of_images_uploaded
 
 def browse_file(entry_widget):
     filename = filedialog.askopenfilename(
-        initialdir="C:\\Users",
+        initialdir="\\C:\\Users",
         title="Select a File",
         filetypes=(
             ("Image files", "*.jpg *.jpeg *.png *.bmp *.tiff"),
@@ -219,9 +219,22 @@ def displayHelp(method):
                 lbl_sharp_help["text"] = "Use 'kernel' for detailed images and 'laplacian' for noisy images."
              else:
                  lbl_sharp_help["text"] = ""
+def refresh_gui_detect():
+    for widget in detect_widgets:
+        widget.grid_remove()
+    for label in detect_labels:
+        label.grid_forget()
+
+def refresh_gui_restore():
+    for widget in restore_widgets:
+        widget.grid_remove()
+    for label in restore_labels:
+        label.grid_forget()
+
 
 def method_changed(event):
     selected_method = opt_method.get()
+    refresh_gui_detect()
     match selected_method:
         case "Error Level Analysis": 
             lbl_in_ela.grid(row=2, column=0, sticky="w")
@@ -231,7 +244,7 @@ def method_changed(event):
             ent_ela_q.grid(row=3, column=1, sticky="w")
             btn_ela.bind('<Button>', event_ela)
             btn_ela.grid(row=4, column=1, sticky="w")
-            tk.Button(tab1, text="Help", command=lambda: displayHelp("ELA")).grid(row=6, column=0)
+            btn_ela_help.grid(row=4, column=0)
             lbl_ela_msg.grid(row=5, column=1)
             lbl_ela_help.grid(row=6, column=1)
         case "Change Color Scheme":
@@ -242,10 +255,10 @@ def method_changed(event):
             opt_color_dropdown.grid(row=3, column=1, sticky="w")
             btn_color.bind('<Button>', event_color)
             btn_color.grid(row=6, column=1, sticky="w")
-            tk.Button(tab1, text="Help", command=lambda: displayHelp("color")).grid(row=6, column=0)
+            btn_color_help.grid(row=6, column=0)
             lbl_color_msg.grid(row=7, column=1)
             lbl_color_help.grid(row=8, column=1)
-        case "Edge Detection     ":
+        case "Edge Detection":
             lbl_edge_in.grid(row=2, column=0, sticky="w")
             ent_edge_in.grid(row=2, column=1, sticky="w")
             tk.Button(tab1, text="Browse Files",command=partial(browse_file, ent_edge_in)).grid(row=2, column=2, sticky="w")
@@ -255,105 +268,94 @@ def method_changed(event):
             ent_edge_higher.grid(row=4, column=1, sticky="w")
             btn_edge.bind('<Button>', event_edge)
             btn_edge.grid(row=6, column=1, sticky="w")
-            tk.Button(tab1, text="Help", command=lambda: displayHelp("edges")).grid(row=6, column=0)
+            btn_edge_help.grid(row=6, column=0)
             lbl_edge_msg.grid(row=7, column=1)
             lbl_edge_help.grid(row=8, column=1)
 
 def restore_method_changed(event):
     selected_restore_method = opt_restore_method.get()
+    refresh_gui_restore()
     match selected_restore_method:
         case "Telea's Inpainting":
             lbl_telea_in.grid(row=1, column=0, sticky="w")
             ent_telea_in.grid(row=1, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_telea_in)).grid(row=1, column=2, sticky="w")
+            btn_telea_browse1.grid(row=1, column=2, sticky="w")
             lbl_telea_mask.grid(row=2, column=0, sticky="w")
             ent_telea_mask.grid(row=2, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_telea_mask)).grid(row=2, column=2, sticky="w")
+            btn_telea_browse2.grid(row=2, column=2, sticky="w")
             lbl_telea_radius.grid(row=3, column=0, sticky="w")
             ent_telea_radius.grid(row=3, column=1, sticky="w")
-            ent_telea_radius.insert(0, 5)
             btn_telea.bind('<Button>', event_telea)
             btn_telea.grid(row=4, column=1, sticky="w")
-            tk.Button(tab2, text="Help", command=lambda: displayHelp("telea")).grid(row=4, column=0)
+            btn_telea_help.grid(row=4, column=0)
             lbl_telea_msg.grid(row=5, column=1)
             lbl_telea_help.grid(row=6, column=1)
         case "PatchMatch Inpainting":
             lbl_patch_in.grid(row=1, column=0, sticky="w")
             ent_patch_in.grid(row=1, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_patch_in)).grid(row=1, column=2, sticky="w")
+            btn_patch_browse.grid(row=1, column=2, sticky="w")
             lbl_patch_mask.grid(row=2, column=0, sticky="w")
             ent_patch_mask.grid(row=2, column=1, sticky="w")
             lbl_patch_maskc.grid(row=3, column=0, sticky="w")
             opt_patch_dropdown.grid(row=3, column=1, sticky="w")
             btn_patch.bind('<Button>', event_patch)
             btn_patch.grid(row=4, column=1, sticky="w")
-            tk.Button(tab2, text="Help", command=lambda: displayHelp("patch")).grid(row=4, column=0)
+            btn_patch_help.grid(row=4, column=0)
             lbl_patch_msg.grid(row=5, column=1)
             lbl_patch_help.grid(row=6, column=1)
         case "Image Enhancement" :
-            lbl_contrast_title = tk.Label(tab2, text ="Increasing contrast images")
-            lbl_contrast_title.config(font=("TkDefaultFont", 10, "bold"))
             lbl_contrast_title.grid(row=1, column=0, sticky="w")
             lbl_contrast_in.grid(row=2, column=0, sticky="w")
             ent_contrast_in.grid(row=2, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_contrast_in)).grid(row=2, column=2, sticky="w")
+            btn_contrast_browse.grid(row=2, column=2, sticky="w")
             btn_contrast.bind('<Button>', event_contrast)
             btn_contrast.grid(row=3, column=1, sticky="w")
             lbl_contrast_msg.grid(row=4, column=1)
 
-            lbl_resize_title = tk.Label(tab2, text ="Resizing images")
-            lbl_resize_title.config(font=("TkDefaultFont", 10, "bold"))
             lbl_resize_title.grid(row=10, column=0, sticky="w")
-            lbl_resize_in.grid(row=10, column=0, sticky="w")
+            lbl_resize_in.grid(row=11, column=0, sticky="w")
             ent_resize_in.grid(row=11, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_resize_in)).grid(row=11, column=2, sticky="w")
+            btn_resize_browse.grid(row=11, column=2, sticky="w")
             lbl_resize_h.grid(row=12, column=0, sticky="w")
             ent_resize_height.grid(row=12, column=1, sticky="w")
             lbl_resize_w.grid(row=13, column=0, sticky="w")
             ent_resize_width.grid(row=13, column=1, sticky="w")
             lbl_resize_method.grid(row=14, column=0, sticky="w")
             opt_resize_dropdown.grid(row=14, column=1, sticky="w")
-            tk.Button(tab2, text="Help", command=lambda: displayHelp("resize")).grid(row=15, column=0, sticky="w")
+            btn_resize_help.grid(row=15, column=0, sticky="w")
             lbl_resize_help.grid(row=15, column=1)
             btn_resize.bind('<Button>', event_resize)
             btn_resize.grid(row=15, column=1, sticky="w")
             lbl_resize_msg.grid(row=16, column=1)
             lbl_resize_help.grid(row=17, column=1)
 
-            lbl_noise_title = tk.Label(tab2, text ="Removing noise")
-            lbl_noise_title.config(font=("TkDefaultFont", 10, "bold"))
             lbl_noise_title.grid(row=20, column=0, sticky="w")
             lbl_noise_in.grid(row=21, column=0, sticky="w")
             ent_noise_in.grid(row=21, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_noise_in)).grid(row=21, column=2, sticky="w")
+            btn_noise_browse.grid(row=21, column=2, sticky="w")
             lbl_noise_method.grid(row=22, column=0, sticky="w")
             opt_noise_dropdown.grid(row=22, column=1, sticky="w")
-            tk.Button(tab2, text="Help", command=lambda: displayHelp("noise")).grid(row=23, column=0, sticky="w")
+            btn_noise_help.grid(row=23, column=0, sticky="w")
             btn_noise.bind('<Button>', event_noise)
             btn_noise.grid(row=23, column=1, sticky="w")
             lbl_noise_msg.grid(row=24, column=1)
             lbl_noise_help.grid(row=25, column=1)
 
-            lbl_sharp_title = tk.Label(tab2, text ="Sharpening images")
-            lbl_sharp_title.config(font=("TkDefaultFont", 10, "bold"))
             lbl_sharp_title.grid(row=30, column=0, sticky="w")
             lbl_sharp_in.grid(row=31, column=0, sticky="w")
             ent_sharp_in.grid(row=31, column=1, sticky="w")
-            tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_sharp_in)).grid(row=31, column=2, sticky="w")
+            btn_sharp_browse.grid(row=31, column=2, sticky="w")
             lbl_sharp_method.grid(row=32, column=0, sticky="w")
             opt_sharp_dropdown.grid(row=32, column=1, sticky="w")
             btn_sharp.bind('<Button>', event_sharp)
             btn_sharp.grid(row=33, column=1, sticky="w")
-            tk.Button(tab2, text="Help", command=lambda: displayHelp("sharp")).grid(row=33, column=0, sticky="w")
+            btn_sharp_help.grid(row=33, column=0, sticky="w")
             lbl_sharp_msg.grid(row=34, column=1)
             lbl_sharp_help.grid(row=35, column=1)
             
 
 
 tabControl.add(tab1, text ='Detect image manipulation')
-
-lbl_empty_1 = tk.Label(tab1, text="") 
-lbl_empty_2 = tk.Label(tab2, text="") 
 
 lbl_in_ela = tk.Label(tab1, text="Input image", width=20)
 lbl_q_ela = tk.Label(tab1, text="Desired quality", width=20)
@@ -362,6 +364,7 @@ ent_ela_q = tk.Entry(tab1, width=5)
 lbl_ela_help = tk.Label(tab1, text="")
 btn_ela = tk.Button(tab1, text='Start')
 lbl_ela_msg = tk.Label(tab1, text="")
+btn_ela_help = tk.Button(tab1, text="Help", command=lambda: displayHelp("ELA"))
 
 lbl_color_in = tk.Label(tab1, text="Input image", width=20)
 lbl_color_method = tk.Label(tab1, text="Desired method", width=20)
@@ -371,6 +374,7 @@ opt_color_dropdown = tk.OptionMenu(tab1, opt_color_method, "hsv", "lum")
 btn_color = tk.Button(tab1, text='Start')
 lbl_color_msg = tk.Label(tab1, text="")
 lbl_color_help = tk.Label(tab1, text="")
+btn_color_help = tk.Button(tab1, text="Help", command=lambda: displayHelp("color"))
 
 lbl_edge_in = tk.Label(tab1, text="Input image", width=20)
 lbl_edge_lower = tk.Label(tab1, text="Lower threshold", width=20)
@@ -381,6 +385,13 @@ ent_edge_lower = tk.Entry(tab1, width=5)
 ent_edge_higher = tk.Entry(tab1, width=5)
 btn_edge = tk.Button(tab1, text='Start')
 lbl_edge_msg = tk.Label(tab1, text="")
+btn_edge_help = tk.Button(tab1, text="Help", command=lambda: displayHelp("edges"))
+
+detect_widgets = [ent_ela_q, btn_ela, btn_ela_help, ent_color_in, opt_color_dropdown, btn_color,
+                  btn_color_help, ent_edge_lower, ent_edge_higher, btn_edge, btn_edge_help]
+
+detect_labels = [lbl_q_ela, lbl_ela_help, lbl_ela_msg, lbl_color_method, lbl_color_msg, 
+                 lbl_color_help, lbl_edge_lower, lbl_edge_higher, lbl_edge_help, lbl_edge_msg]
 
 
 tabControl.add(tab2, text ='Restore images')
@@ -391,9 +402,14 @@ lbl_telea_radius = tk.Label(tab2, text="Neighbourhood radius", width=20)
 ent_telea_in = tk.Entry(tab2, width=100)
 ent_telea_mask = tk.Entry(tab2, width=100)
 ent_telea_radius = tk.Entry(tab2, width=5)
+ent_telea_radius.insert(0, 5)
 lbl_telea_help = tk.Label(tab2, text="")
 btn_telea = tk.Button(tab2, text='Start')
+btn_telea_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("telea"))
 lbl_telea_msg = tk.Label(tab2, text="")
+btn_telea_browse1 = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_telea_in))
+btn_telea_browse2 = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_telea_mask))
+
 
 lbl_patch_in = tk.Label(tab2, text="Input image", width=20)
 lbl_patch_mask = tk.Label(tab2, text="Mask image", width=20)
@@ -404,15 +420,20 @@ opt_patch_maskc = tk.StringVar(value="white")
 opt_patch_dropdown = tk.OptionMenu(tab2, opt_patch_maskc, "white", "black", "red", "green", "blue")
 btn_patch = tk.Button(tab2, text='Start')
 lbl_patch_msg = tk.Label(tab2, text="")
+btn_patch_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("patch"))
 lbl_patch_help = tk.Label(tab2, text="")
+btn_patch_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_patch_in))
 
-lbl_contrast_title = tk.Label(text="Increasing contrast")
-lbl_contrast_title.config(font="default", )
+lbl_contrast_title = tk.Label(tab2, text="Increasing contrast")
+lbl_contrast_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_contrast_in = tk.Label(tab2, text="Input image", width=20)
 ent_contrast_in = tk.Entry(tab2, width=100)
+btn_contrast_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_contrast_in))
 btn_contrast = tk.Button(tab2, text='Start')
 lbl_contrast_msg = tk.Label(tab2, text="")
 
+lbl_resize_title = tk.Label(tab2, text ="Resizing images")
+lbl_resize_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_resize_in = tk.Label(tab2, text="Input image", width=20)
 lbl_resize_h = tk.Label(tab2, text="Height scale", width=20)
 lbl_resize_w = tk.Label(tab2, text="Width scale", width=20)
@@ -420,12 +441,16 @@ lbl_resize_method = tk.Label(tab2, text="Method", width=20)
 opt_resize_method = tk.StringVar(value="cubic")
 opt_resize_dropdown = tk.OptionMenu(tab2, opt_resize_method, "cubic", "lanczos", "linear")
 ent_resize_in = tk.Entry(tab2, width=100)
+btn_resize_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_resize_in))
 ent_resize_height = tk.Entry(tab2, width=5)
 ent_resize_width = tk.Entry(tab2, width=5)
 lbl_resize_help = tk.Label(tab2, text="")
 btn_resize = tk.Button(tab2, text='Start')
+btn_resize_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("resize"))
 lbl_resize_msg = tk.Label(tab2, text="")
 
+lbl_noise_title = tk.Label(tab2, text ="Removing noise")
+lbl_noise_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_noise_in = tk.Label(tab2, text="Input image", width=20)
 lbl_noise_method = tk.Label(tab2, text="Method", width=20)
 ent_noise_in = tk.Entry(tab2, width=100)
@@ -433,9 +458,12 @@ opt_noise_method = tk.StringVar(value="gaussian")
 opt_noise_dropdown = tk.OptionMenu(tab2, opt_noise_method, "gaussian", "median")
 lbl_noise_help = tk.Label(tab2, text="")
 lbl_noise_msg = tk.Label(tab2, text="")
-lbl_noise_help = tk.Label(tab2, text="")
 btn_noise = tk.Button(tab2, text='Start')
+btn_noise_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_noise_in))
+btn_noise_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("noise"))
 
+lbl_sharp_title = tk.Label(tab2, text ="Sharpening images")
+lbl_sharp_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_sharp_in = tk.Label(tab2, text="Input image", width=20)
 lbl_sharp_method = tk.Label(tab2, text="Method", width=20)
 ent_sharp_in = tk.Entry(tab2, width=100)
@@ -444,6 +472,24 @@ opt_sharp_dropdown = tk.OptionMenu(tab2, opt_sharp_method, "kernel", "laplacian"
 lbl_sharp_help = tk.Label(tab2, text="")                                             
 btn_sharp = tk.Button(tab2, text='Start')
 lbl_sharp_msg = tk.Label(tab2, text="")
+btn_sharp_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("sharp"))
+btn_sharp_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_sharp_in))
+
+restore_widgets = [ent_telea_in, ent_telea_mask, ent_telea_radius, btn_telea_help, btn_telea, btn_telea_browse1, btn_telea_browse2,
+                   ent_patch_in, ent_patch_mask, opt_patch_dropdown, btn_patch, btn_patch_help, btn_patch_browse,
+                   ent_contrast_in, btn_contrast, btn_contrast_browse,
+                   opt_resize_dropdown, ent_resize_in, ent_resize_height, ent_resize_width, btn_resize, btn_resize_help,
+                   ent_noise_in, opt_noise_dropdown, btn_noise, btn_noise_help,
+                   ent_sharp_in, opt_sharp_dropdown, btn_sharp, btn_sharp_help, 
+                   ]
+
+restore_labels = [lbl_telea_in, lbl_telea_mask, lbl_telea_radius, lbl_telea_help, lbl_telea_msg, 
+                   lbl_patch_in, lbl_patch_mask, lbl_patch_maskc, lbl_patch_msg, lbl_patch_help, 
+                   lbl_contrast_in, lbl_contrast_msg, lbl_contrast_title, 
+                   lbl_resize_h, lbl_resize_w, lbl_resize_help, lbl_resize_method, lbl_resize_in, 
+                   lbl_resize_msg, lbl_resize_title, btn_resize_browse,
+                   lbl_noise_help, lbl_noise_in, lbl_noise_method, lbl_noise_msg, lbl_noise_title, btn_noise_browse,
+                   lbl_sharp_title, lbl_sharp_in, lbl_sharp_help, lbl_sharp_method, lbl_sharp_msg, btn_sharp_browse]
 
 
 tabControl.add(tab3, text ='Compare results')
