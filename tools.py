@@ -11,6 +11,7 @@ def parseParameters(path):
         params.update({"Algorithm": algorithm.capitalize()})
         match algorithm:
             case "ELA":
+                params.update({"Algorithm": algorithm})
                 quality = split_real_path[2]
                 params.update({"Quality": quality})
             case "HSV":
