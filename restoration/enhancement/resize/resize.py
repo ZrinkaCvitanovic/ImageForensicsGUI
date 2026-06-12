@@ -9,7 +9,7 @@ parser.add_argument('h', metavar='height_scale', type=int,
                 help='desired scale for increasing height')
 parser.add_argument('w', metavar='width_scale', type=int,
                      help='desired scale for increasing width')
-parser.add_argument('method', type=str, choices=["cubic", "lanzos", "linear"], help="desired method for interpolation")
+parser.add_argument('method', type=str, choices=["cubic", "lanczos", "linear"], help="desired method for interpolation")
 args = parser.parse_args()
 
 image = cv2.imread(args.in_path)
@@ -21,7 +21,7 @@ height, width = low_res_img.shape[:2]
 match args.method:
     case "cubic":
         method = cv2.INTER_CUBIC
-    case "lanzos":
+    case "lanczos":
         method = cv2.INTER_LANCZOS4
     case "linear":
         method = cv2.INTER_LINEAR

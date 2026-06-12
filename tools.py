@@ -8,7 +8,7 @@ def parseParameters(path):
     params.update({"Original image": image_title + extension})
     try:
         algorithm = split_real_path[1]
-        params.update({"Algorithm": algorithm})
+        params.update({"Algorithm": algorithm.capitalize()})
         match algorithm:
             case "ELA":
                 quality = split_real_path[2]
@@ -27,7 +27,7 @@ def parseParameters(path):
                 mask_color = split_real_path[2]
                 params.update({"Mask color": mask_color.capitalize()})
             case "resize":
-                method = split_real_path[2]
+                method = split_real_path[2].capitalize()
                 height_scale = split_real_path[3]
                 width_scale = split_real_path[4]
                 params.update({"Method": method.capitalize()})
@@ -36,6 +36,9 @@ def parseParameters(path):
             case "sharpen":
                 method = split_real_path[2]
                 params.update({"Method": method.capitalize()})
+            case "contrast":
+                method = split_real_path[2]
+                params.update({"Method": "Increasing contrast"})
             case "Telea":
                 params.update({"Algorithm": "Telea's inpainting"})
                 radius = split_real_path[2]

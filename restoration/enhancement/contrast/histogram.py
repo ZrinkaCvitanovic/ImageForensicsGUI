@@ -12,5 +12,5 @@ equalized_image = cv2.equalizeHist(gray_image)
 parsed_path = args.in_path.split(".")
 real_path = parsed_path[0]
 extension = "." + parsed_path[1]
-output_path = real_path + "-sharpen-histogram" + extension
+output_path = real_path + "-contrast-histogram" + extension
 cv2.imwrite(output_path, equalized_image)

@@ -106,8 +106,8 @@ def event_resize(event):
     try:
         height = int(height_scale)
         width = int(width_scale)
-        if method != "cubic" and method != "lanzos" and method != "linear":
-            lbl_resize_msg["text"] = "Supported choices are cubic, lanzos and linear."
+        if method != "cubic" and method != "lanczos" and method != "linear":
+            lbl_resize_msg["text"] = "Supported choices are cubic, lanczos and linear."
         else:
             lbl_resize_msg["text"] ="Success!"
             subprocess.run(['python', 'restoration\\enhancement\\resize\\resize.py', in_image, height_scale, width_scale, method])
@@ -178,7 +178,6 @@ def displayHelp(method):
             else:
                 lbl_ela_help["text"] = ""
         case "color":
-            print(lbl_color_help["text"])
             if len(lbl_color_help["text"]) == 0:
                 lbl_color_help["text"] = "Always use both methods because each can cause false positives."
             else:
@@ -204,7 +203,7 @@ def displayHelp(method):
             if len(lbl_resize_help["text"]) == 0:
                 lbl_resize_help["text"] = """
             Linear interpolation - fastest, works fine for pictures without too much details
-            Lanzos - smoother, but for a large amount of images can be slow.
+            Lanczos - smoother, but for a large amount of images can be slow.
             Cubic - a compromise between the two
             """
             else:
@@ -223,7 +222,6 @@ def displayHelp(method):
 
 def method_changed(event):
     selected_method = opt_method.get()
-    print("selected_method", selected_method)
     match selected_method:
         case "Error Level Analysis": 
             lbl_in_ela.grid(row=2, column=0, sticky="w")
@@ -263,7 +261,6 @@ def method_changed(event):
 
 def restore_method_changed(event):
     selected_restore_method = opt_restore_method.get()
-    print("selected_method", selected_restore_method)
     match selected_restore_method:
         case "Telea's Inpainting":
             lbl_telea_in.grid(row=1, column=0, sticky="w")
@@ -421,7 +418,7 @@ lbl_resize_h = tk.Label(tab2, text="Height scale", width=20)
 lbl_resize_w = tk.Label(tab2, text="Width scale", width=20)
 lbl_resize_method = tk.Label(tab2, text="Method", width=20)
 opt_resize_method = tk.StringVar(value="cubic")
-opt_resize_dropdown = tk.OptionMenu(tab2, opt_resize_method, "cubic", "lanzos", "linear")
+opt_resize_dropdown = tk.OptionMenu(tab2, opt_resize_method, "cubic", "lanczos", "linear")
 ent_resize_in = tk.Entry(tab2, width=100)
 ent_resize_height = tk.Entry(tab2, width=5)
 ent_resize_width = tk.Entry(tab2, width=5)
