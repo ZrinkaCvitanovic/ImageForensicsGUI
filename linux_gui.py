@@ -174,12 +174,12 @@ def displayHelp(method):
     match method:
         case "ELA":
             if len(lbl_ela_help["text"]) == 0:
-                lbl_ela_help["text"] = "Recommended values for quality are between 40 and 80. For high resolution images, choose lower values and vice versa." 
+                lbl_ela_help["text"] = "Recommended values for quality are between 40 and 80.\nFor high resolution images, choose lower values and vice versa." 
             else:
                 lbl_ela_help["text"] = ""
         case "color":
             if len(lbl_color_help["text"]) == 0:
-                lbl_color_help["text"] = "Always use both methods because each can cause false positives."
+                lbl_color_help["text"] = "hsv - convert the image to HSV color scheme\nlum - show luminance of the image\nAlways use both options because each can cause false positives."
             else:
                 lbl_color_help["text"] = ""
         case "edges":
@@ -191,32 +191,32 @@ def displayHelp(method):
                 lbl_edge_help["text"] = ""
         case "telea":
             if len(lbl_telea_help["text"]) == 0:
-                lbl_telea_help["text"] = "Default value for radius is 5. For less narrow masks, choose a smaller radius."
+                lbl_telea_help["text"] = "Default value for neighbourhood radius is 5 and it works for most images.\nFor less narrow masks, choose a larger radius."
             else:
                 lbl_telea_help["text"] = ""
         case "patch":
             if len(lbl_patch_help["text"]) == 0:
-                lbl_patch_help["text"] = "Choose the color with which the object you wish to remove is marked on mask image"
+                lbl_patch_help["text"] = "Mask color - the color on the mask image which covers the patch you wish to remove"
             else:
                 lbl_patch_help["text"] = ""
         case "resize":
             if len(lbl_resize_help["text"]) == 0:
                 lbl_resize_help["text"] = """
-            Linear interpolation - fastest, works fine for pictures without too much details
-            Lanczos - smoother, but for a large amount of images can be slow.
+            Linear - fastest interpolation, works fine for pictures without too much details
+            Lanczos - produces sharper and more detailed images, but can be slow for a large amount of images
             Cubic - a compromise between the two
             """
             else:
                 lbl_resize_help["text"] = ""
         case "noise":
             if len(lbl_noise_help["text"]) == 0:
-                lbl_noise_help["text"] = "Use 'gaussian' for Gaussian noise and 'median' for random or 'salt and pepper' noise."
+                lbl_noise_help["text"] = "gaussian - ideal for Gaussian noise\nmedian - random or 'salt and pepper' (grainy) noise."
 
             else:
                 lbl_noise_help["text"] = ""
         case "sharp":
              if len(lbl_sharp_help["text"]) == 0:
-                lbl_sharp_help["text"] = "Use 'kernel' for detailed images and 'laplacian' for noisy images."
+                lbl_sharp_help["text"] = "kernel - ideal for detailed and clean images, but can increase noise\nlaplacian - creates more blurry images, but works better with noisy images."
              else:
                  lbl_sharp_help["text"] = ""
 def refresh_gui_detect():
@@ -303,8 +303,7 @@ def restore_method_changed(event):
             btn_patch_help.grid(row=4, column=0)
             lbl_patch_msg.grid(row=5, column=1)
             lbl_patch_help.grid(row=6, column=1)
-        case "Image Enhancement" :
-            lbl_contrast_title.grid(row=1, column=0, sticky="w")
+        case "Increasing Contrast":
             lbl_contrast_in.grid(row=2, column=0, sticky="w")
             ent_contrast_in.grid(row=2, column=1, sticky="w")
             btn_contrast_browse.grid(row=2, column=2, sticky="w")
@@ -312,7 +311,7 @@ def restore_method_changed(event):
             btn_contrast.grid(row=3, column=1, sticky="w")
             lbl_contrast_msg.grid(row=4, column=1)
 
-            lbl_resize_title.grid(row=10, column=0, sticky="w")
+        case "Resizing Images":
             lbl_resize_in.grid(row=11, column=0, sticky="w")
             ent_resize_in.grid(row=11, column=1, sticky="w")
             btn_resize_browse.grid(row=11, column=2, sticky="w")
@@ -328,8 +327,7 @@ def restore_method_changed(event):
             btn_resize.grid(row=15, column=1, sticky="w")
             lbl_resize_msg.grid(row=16, column=1)
             lbl_resize_help.grid(row=17, column=1)
-
-            lbl_noise_title.grid(row=20, column=0, sticky="w")
+        case "Removing Noise":
             lbl_noise_in.grid(row=21, column=0, sticky="w")
             ent_noise_in.grid(row=21, column=1, sticky="w")
             btn_noise_browse.grid(row=21, column=2, sticky="w")
@@ -340,8 +338,7 @@ def restore_method_changed(event):
             btn_noise.grid(row=23, column=1, sticky="w")
             lbl_noise_msg.grid(row=24, column=1)
             lbl_noise_help.grid(row=25, column=1)
-
-            lbl_sharp_title.grid(row=30, column=0, sticky="w")
+        case "Sharpening Images":
             lbl_sharp_in.grid(row=31, column=0, sticky="w")
             ent_sharp_in.grid(row=31, column=1, sticky="w")
             btn_sharp_browse.grid(row=31, column=2, sticky="w")
@@ -424,22 +421,18 @@ btn_patch_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("patch
 lbl_patch_help = tk.Label(tab2, text="")
 btn_patch_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_patch_in))
 
-lbl_contrast_title = tk.Label(tab2, text="Increasing contrast")
-lbl_contrast_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_contrast_in = tk.Label(tab2, text="Input image", width=20)
 ent_contrast_in = tk.Entry(tab2, width=100)
 btn_contrast_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_contrast_in))
 btn_contrast = tk.Button(tab2, text='Start')
 lbl_contrast_msg = tk.Label(tab2, text="")
 
-lbl_resize_title = tk.Label(tab2, text ="Resizing images")
-lbl_resize_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_resize_in = tk.Label(tab2, text="Input image", width=20)
 lbl_resize_h = tk.Label(tab2, text="Height scale", width=20)
 lbl_resize_w = tk.Label(tab2, text="Width scale", width=20)
 lbl_resize_method = tk.Label(tab2, text="Method", width=20)
 opt_resize_method = tk.StringVar(value="cubic")
-opt_resize_dropdown = tk.OptionMenu(tab2, opt_resize_method, "cubic", "lanczos", "linear")
+opt_resize_dropdown = tk.OptionMenu(tab2, opt_resize_method, "linear",  "lanczos", "cubic")
 ent_resize_in = tk.Entry(tab2, width=100)
 btn_resize_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_resize_in))
 ent_resize_height = tk.Entry(tab2, width=5)
@@ -449,8 +442,6 @@ btn_resize = tk.Button(tab2, text='Start')
 btn_resize_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("resize"))
 lbl_resize_msg = tk.Label(tab2, text="")
 
-lbl_noise_title = tk.Label(tab2, text ="Removing noise")
-lbl_noise_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_noise_in = tk.Label(tab2, text="Input image", width=20)
 lbl_noise_method = tk.Label(tab2, text="Method", width=20)
 ent_noise_in = tk.Entry(tab2, width=100)
@@ -462,8 +453,6 @@ btn_noise = tk.Button(tab2, text='Start')
 btn_noise_browse = tk.Button(tab2, text="Browse Files",command=partial(browse_file, ent_noise_in))
 btn_noise_help = tk.Button(tab2, text="Help", command=lambda: displayHelp("noise"))
 
-lbl_sharp_title = tk.Label(tab2, text ="Sharpening images")
-lbl_sharp_title.config(font=("TkDefaultFont", 10, "bold"))
 lbl_sharp_in = tk.Label(tab2, text="Input image", width=20)
 lbl_sharp_method = tk.Label(tab2, text="Method", width=20)
 ent_sharp_in = tk.Entry(tab2, width=100)
@@ -485,11 +474,11 @@ restore_widgets = [ent_telea_in, ent_telea_mask, ent_telea_radius, btn_telea_hel
 
 restore_labels = [lbl_telea_in, lbl_telea_mask, lbl_telea_radius, lbl_telea_help, lbl_telea_msg, 
                    lbl_patch_in, lbl_patch_mask, lbl_patch_maskc, lbl_patch_msg, lbl_patch_help, 
-                   lbl_contrast_in, lbl_contrast_msg, lbl_contrast_title, 
+                   lbl_contrast_in, lbl_contrast_msg,
                    lbl_resize_h, lbl_resize_w, lbl_resize_help, lbl_resize_method, lbl_resize_in, 
-                   lbl_resize_msg, lbl_resize_title, btn_resize_browse,
-                   lbl_noise_help, lbl_noise_in, lbl_noise_method, lbl_noise_msg, lbl_noise_title, btn_noise_browse,
-                   lbl_sharp_title, lbl_sharp_in, lbl_sharp_help, lbl_sharp_method, lbl_sharp_msg, btn_sharp_browse]
+                   lbl_resize_msg, btn_resize_browse,
+                   lbl_noise_help, lbl_noise_in, lbl_noise_method, lbl_noise_msg, btn_noise_browse,
+                   lbl_sharp_in, lbl_sharp_help, lbl_sharp_method, lbl_sharp_msg, btn_sharp_browse]
 
 
 tabControl.add(tab3, text ='Compare results')
@@ -502,14 +491,14 @@ lbl_restore_method.grid(row=0, column=1, sticky="w")
 opt_method = tk.StringVar(value="")
 combo_detect_method = ttk.Combobox(tab1, textvariable=opt_method)
 combo_detect_method['values'] = ["Error Level Analysis", "Change Color Scheme", 
-                    "Edge Detection     "]
+                    "Edge Detection"]
 combo_detect_method.bind('<<ComboboxSelected>>', method_changed)
 combo_detect_method.grid(row=0, column=0, sticky="w")
 
 opt_restore_method = tk.StringVar(value="")
 combo_restore_method = ttk.Combobox(tab2, textvariable=opt_restore_method)
 combo_restore_method['values'] = ["Telea's Inpainting", 
-                    "PatchMatch Inpainting","Image Enhancement"]
+                    "PatchMatch Inpainting","Increasing Contrast", "Resizing Images", "Removing Noise", "Sharpening Images"]
 combo_restore_method.bind('<<ComboboxSelected>>', restore_method_changed)
 combo_restore_method.grid(row=0, column=0, sticky="w")
 
